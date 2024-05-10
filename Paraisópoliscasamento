@@ -1,0 +1,35 @@
+from flask import Flask, render_template, request
+import datetime
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    if request.method == 'POST':
+        form_data = request.form
+        formatted_date = datetime.datetime.now().strftime("%A, %d de %B de %Y %H:%M")
+        casamento_info = "💒 FORMULÁRIO DE CASAMENTO 💒\n\n" \
+                        "🔹 Nome do advogado(a) responsável: " + form_data['nomeAdvogado'] + "\n" \
+                        "🔹 RG do Advogado(a) responsável: " + form_data['rgAdvogado'] + "\n" \
+                        "🔹 Nome do Noivo: " + form_data['nomeNoivo'] + "\n" \
+                        "🔹 CPF do Noivo: " + form_data['cpfNoivo'] + "\n" \
+                        "🔹 Nome da Noiva: " + form_data['nomeNoiva'] + "\n" \
+                        "🔹 CPF da Noiva: " + form_data['cpfNoiva'] + "\n" \
+                        "🔹 Regime de Bens do Casamento: " + form_data['regimeBens'] + "\n" \
+                        "🔹 Data do Casamento: " + form_data['dataCasamento'] + "\n" \
+                        "🔹 Novo nome do Noivo: " + form_data['novoNomeNoivo'] + "\n" \
+                        "🔹 Novo nome da Noiva: " + form_data['novoNomeNoiva'] + "\n" \
+                        "🔹 Observações/Averbações: " + form_data['observacoes'] + "\n\n" \
+                        "━━━━━━━━━━━━━━━━━━✧ • ✧━━━━━━━━━━━━━━━\n" \
+                        "⚖️ SEM MAIS PARA O MOMENTO, A PARTIR DESTA DATA DECLARO ASSIM CASADOS\n" \
+                        "EM MATRIMÔNIO OS CIDADÃOS SUPRAMENCIONADOS.⚖️\n" \
+                        "━━━━━━━━━━━━━━━━━━━━━✧ • ✧━━━━━━━━━━━━\n\n" \
+                        "Data e hora do preenchimento: " + formatted_date
+        return "<pre>" + casamento_info + "</pre>"
+
+if __name__ == '__main__':
+    app.run(debug=True)
